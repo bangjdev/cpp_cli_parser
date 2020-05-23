@@ -1,36 +1,7 @@
 #include "parser.h"
-#include <bits/c++config.h>
 #include <cstring>
 #include <string>
-#include <vector>
-#include <regex>
-
-
-// User-defined function to split a string into a std::vector<std::string> using delimiter
-
-std::vector<std::string> split(std::string str, const std::string &delimiter) {
-    std::regex delimRegex("[" + delimiter + "]");
-    std::regex_token_iterator<std::string::iterator> itEnd;
-    std::regex_token_iterator<std::string::iterator> it(str.begin(), str.end(), delimRegex);
-
-    std::vector<std::string> splitResult;
-
-    while (it != itEnd) {
-        if (*it != "") {
-            splitResult.push_back(*it);
-        }
-        it ++;
-    }
-    return splitResult;
-}
-
-
-/*
- *
- * Class implementation
- *
- *
- */
+#include <iostream>
 
 Parser::Parser() {
     this->paramsMap.clear();
@@ -53,7 +24,11 @@ std::string Parser::getDelimiter() {
 }
 
 void Parser::addParamMapping(const std::string &flags, std::string &variable) {
-    this->flagsList = split(flags, this->delimiter);
+    std::vector<std::string> newFlags = split(flags, this->delimiter);
+    for (const std::string &newFlag : newFlags) {
+        this->flagsList.push_back(newFlag);
+    }
+
     for (std::string &flag: flagsList) {
         this->paramsMap.insert(std::pair<std::string, std::string&>(flag, variable));
     } 

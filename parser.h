@@ -1,3 +1,4 @@
+#include "parser_utils.h"
 #include <map>
 #include <vector>
 
@@ -5,7 +6,7 @@ class Parser {
     private:
         std::map<std::string, std::string&> paramsMap;
         std::vector<std::string> flagsList;
-        std::string delimiter;
+        std::string delimiter = "|";
 
     public:
         Parser();
